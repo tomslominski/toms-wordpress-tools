@@ -1,0 +1,22 @@
+{
+    "name": "tomslominski/toms-wordpress-tools",
+    "description": "A bunch of WordPress helpers for my hosted WordPress sites.",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Tom Slominski",
+            "email": "tom@slomin.ski"
+        }
+    ],
+    "require": {
+        "haydenpierce/class-finder": "^0.4.2",
+        "php": ">=7.4",
+        "composer/installers": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TomsWordPressTools\\": "src"
+        }
+    }
+}
