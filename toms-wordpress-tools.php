@@ -24,13 +24,11 @@ use HaydenPierce\ClassFinder\ClassFinder;
 require_once( __DIR__ . '/vendor/autoload.php' );
 
 try {
-	add_action( 'init', function() {
-		$classes = ClassFinder::getClassesInNamespace('TomsWordPressTools\Modules', ClassFinder::RECURSIVE_MODE);
+	$classes = ClassFinder::getClassesInNamespace('TomsWordPressTools\Modules', ClassFinder::RECURSIVE_MODE);
 
-		foreach( $classes as $class ) {
-			new $class;
-		}
-	} );
+	foreach( $classes as $class ) {
+		new $class;
+	}
 } catch( \Exception $e ) {
 	error_log( $e->getMessage() );
 }
