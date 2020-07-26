@@ -2,12 +2,14 @@
 
 namespace TomsWordPressTools\Modules\Essentials;
 
+use TomsWordPressTools\BaseModule;
+
 /**
  * Essentials module.
  *
  * @package TomsWordPressTools\Modules\Essentials
  */
-class Module
+class Module extends BaseModule
 {
 	/**
 	 * Instantiate parts of module.
@@ -17,6 +19,8 @@ class Module
 		$this->disable_default_theme_site_status();
 		$this->add_plugins_to_admin_bar();
 		$this->disable_post_tags();
+
+		parent::construct();
 	}
 
 	/**

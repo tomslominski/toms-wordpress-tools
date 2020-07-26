@@ -17,6 +17,9 @@
     "autoload": {
         "psr-4": {
             "TomsWordPressTools\\": "src"
-        }
+        },
+        "files": [
+            "utilities.php"
+        ]
     }
 }

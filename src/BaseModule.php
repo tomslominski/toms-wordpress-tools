@@ -17,11 +17,23 @@ class BaseModule
 	private array $settings = [];
 
 	/**
+	 * @var array Registered scripts for module.
+	 */
+	private array $scripts = [];
+
+	/**
+	 * @var array Registered styles for module.
+	 */
+	private array $styles = [];
+
+	/**
 	 * Instantiate module.
 	 */
 	public function construct()
 	{
 		$this->registerSettings();
+		$this->enqueueScripts();
+		$this->enqueueStyles();
 	}
 
 	/**
@@ -95,6 +107,86 @@ class BaseModule
 			   value="<?php echo esc_attr($setting['value']); ?>" class="regular-text">
 
 		<?php
+	}
+
+	/**
+	 * Enqueue front-end script.
+	 *
+	 * @param string $id Alphanumeric script ID.
+	 * @param string $src Script source.
+	 * @param array $deps Script dependencies.
+	 * @param bool $async Whether to load the script asynchronously.
+	 */
+	public function addScript(string $id, string $src, array $deps = [], bool $async = true)
+	{
+		$this->scripts[$id] = [
+			'id' => $id,
+			'src' => $src,
+			'deps' => $deps,
+			'async' => $async,
+		];
+	}
+
+	/**
+	 * Enqueue registered scripts.
+	 */
+	public function enqueueScripts()
+	{
+		if ($this->scripts) {
+			add_action('wp_enqueue_scripts', function () {
+				foreach ($this->scripts as $script) {
+					wp_enqueue_script($script['id'], $script['src'], $script['deps'], twpt_get_plugin_version(), true);
+				}
+			});
+
+			$this->asyncScripts();
+		}
+	}
+
+	/**
+	 * Add async attribute to registered scripts.
+	 */
+	public function asyncScripts()
+	{
+		add_filter('script_loader_tag', function ($tag, $id) {
+			if ($this->scripts[$id]['async'] ?? null) {
+				if (false === stripos($tag, 'async')) {
+					$tag = str_replace(' src', ' async="async" src', $tag);
+				}
+			}
+
+			return $tag;
+		}, 10, 2);
+	}
+
+	/**
+	 * Enqueue front-end styles.
+	 *
+	 * @param string $id Alphanumeric style ID.
+	 * @param string $src Style source.
+	 * @param array $deps Style dependencies.
+	 */
+	public function addStyle(string $id, string $src, array $deps = [])
+	{
+		$this->styles[$id] = [
+			'id' => $id,
+			'src' => $src,
+			'deps' => $deps,
+		];
+	}
+
+	/**
+	 * Enqueue registered stylesheets.
+	 */
+	public function enqueueStyles()
+	{
+		if ($this->styles) {
+			add_action('wp_enqueue_scripts', function () {
+				foreach ($this->styles as $style) {
+					wp_enqueue_style($style['id'], $style['src'], $style['deps'], twpt_get_plugin_version());
+				}
+			});
+		}
 	}
 
 }

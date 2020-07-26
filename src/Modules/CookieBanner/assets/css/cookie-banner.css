@@ -1,0 +1,59 @@
+/**
+  Cookie banner module.
+ */
+
+.ts-cookie-banner {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    font-size: 12px;
+    background: black;
+    color: white;
+    padding: 10px;
+}
+
+.ts-cookie-banner a {
+    color: white;
+    text-decoration: underline;
+}
+
+.ts-cookie-banner a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.ts-cookie-banner p {
+    margin: 0 0 15px 0;
+    line-height: 16px;
+}
+
+.ts-cookie-banner-close {
+    float: right;
+    padding: 5px 10px;
+    border-radius: 0;
+    font-size: 12px;
+    font-weight: 400;
+    border: 2px solid white;
+    color: white;
+    transition: background 0.3s, color 0.3s;
+    background: none;
+    text-transform: none;
+}
+
+.ts-cookie-banner-close:hover {
+    background: white;
+    color: black;
+    text-decoration: none;
+}
+
+.ts-cookie-banner.ts-hidden {
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .ts-cookie-banner {
+        margin: 10px;
+        max-width: 300px;
+    }
+}
