@@ -19,6 +19,7 @@ class Module extends BaseModule
 		$this->disable_default_theme_site_status();
 		$this->add_plugins_to_admin_bar();
 		$this->disable_post_tags();
+		$this->enable_svg_support();
 
 		parent::construct();
 	}
@@ -77,5 +78,19 @@ class Module extends BaseModule
 				unregister_taxonomy_for_object_type('post_tag', 'post');
 			});
 		}
+	}
+
+	/**
+	 * Enable SVG support on non-Elementor sites.
+	 */
+	public function enable_svg_support()
+	{
+		add_filter('upload_mimes', function ($mimes) {
+			if (current_user_can('manage_options')) {
+				$mimes['svg'] = 'image/svg+xml';
+			}
+
+			return $mimes;
+		});
 	}
 }
