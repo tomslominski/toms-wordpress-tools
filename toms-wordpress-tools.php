@@ -10,7 +10,7 @@
  * Plugin Name: Tom's WordPress Tools
  * Plugin URI: https://github.com/tomslominski/toms-wordpress-tools
  * Description: A bunch of WordPress helpers for my hosted WordPress sites.
- * Version: 0.1.0
+ * Version: 0.1.2
  * Requires at least: 5.2
  * Requires PHP: 7.3
  * Author: Tom Slominski
@@ -21,14 +21,18 @@
 
 use HaydenPierce\ClassFinder\ClassFinder;
 
-require_once( __DIR__ . '/vendor/autoload.php' );
+// Include autoloader for development, this isn't used in production
+$autoloader = __DIR__ . '/vendor/autoload.php';
+if (file_exists($autoloader)) {
+	require_once($autoloader);
+}
 
 try {
 	$classes = ClassFinder::getClassesInNamespace('TomsWordPressTools\Modules', ClassFinder::RECURSIVE_MODE);
 
-	foreach( $classes as $class ) {
+	foreach ($classes as $class) {
 		new $class;
 	}
-} catch( \Exception $e ) {
-	error_log( $e->getMessage() );
+} catch (Exception $e) {
+	error_log($e->getMessage());
 }
