@@ -38,7 +38,7 @@ class Module extends BaseModule
 				function gtag(){dataLayer.push(arguments);}
 				gtag('js', new Date());
 
-				gtag('config', '<?php echo $id; ?>');
+				gtag('config', '<?php echo $id; ?>', {'anonymize_ip': true});
 			</script>
 		<?php }
 	}
