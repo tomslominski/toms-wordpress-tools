@@ -1,0 +1,33 @@
+on:
+  release:
+    types: [created]
+name: Handle new release
+jobs:
+  generate:
+    name: Zip plugin on release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer
+          coverage: none
+
+      - name: Checkout the repository
+        uses: actions/checkout@master
+        with:
+          path: toms-wordpress-tools
+
+      - name: Install Composer dependencies and generate autoloader
+        run: cd toms-wordpress-tools && composer install --no-dev --optimize-autoloader --quiet && cd ..
+
+      - name: Zip the outcome
+        run: zip -r toms-wordpress-tools.zip toms-wordpress-tools -x "toms-wordpress-tools/.*" -q
+
+      - name: Upload the artifacts
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: toms-wordpress-tools.zip
