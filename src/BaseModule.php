@@ -14,17 +14,17 @@ class BaseModule
 	/**
 	 * @var array Registered settings for module.
 	 */
-	private array $settings = [];
+	private $settings = [];
 
 	/**
 	 * @var array Registered scripts for module.
 	 */
-	private array $scripts = [];
+	private $scripts = [];
 
 	/**
 	 * @var array Registered styles for module.
 	 */
-	private array $styles = [];
+	private $styles = [];
 
 	/**
 	 * Instantiate module.
