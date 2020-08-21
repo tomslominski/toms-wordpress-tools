@@ -10,7 +10,7 @@
  * Plugin Name: Tom's WordPress Tools
  * Plugin URI: https://github.com/tomslominski/toms-wordpress-tools
  * Description: A bunch of WordPress helpers for my hosted WordPress sites.
- * Version: 0.1.4
+ * Version: 0.1.5
  * Requires at least: 5.2
  * Requires PHP: 7.3
  * Author: Tom Slominski
@@ -27,6 +27,8 @@ if (file_exists($autoloader)) {
 	require_once($autoloader);
 }
 
+do_action( 'TomsWordPressTools/before_init' );
+
 try {
 	$classes = ClassFinder::getClassesInNamespace('TomsWordPressTools\Modules', ClassFinder::RECURSIVE_MODE);
 
@@ -36,3 +38,5 @@ try {
 } catch (Exception $e) {
 	error_log($e->getMessage());
 }
+
+do_action( 'TomsWordPressTools/after_init' );

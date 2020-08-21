@@ -20,7 +20,7 @@ class Module extends BaseModule
 		add_action('wp_footer', [$this, 'output_banner']);
 
 		$this->addSetting('cookie_banner_message', __('Custom Cookie Banner Message', 'toms-wordpress-tools'), 'reading', 'textarea', 'wp_kses_data');
-		$this->addScript('cookie-banner', plugin_dir_url(__FILE__) . 'assets/js/cookie-banner.js');
+		$this->addScript('cookie-banner', plugin_dir_url(__FILE__) . 'assets/js/cookie-banner.js', [], false);
 		$this->addStyle('cookie-banner', plugin_dir_url(__FILE__) . 'assets/css/cookie-banner.css');
 
 		parent::construct();
