@@ -16,7 +16,7 @@ class Module extends BaseModule
 	 */
 	public function __construct()
 	{
-		$this->addSetting( 'google_tracking_id', __( 'Google Analytics Tracking ID', 'toms-wordpress-tools' ), 'general', 'string', 'sanitize_text_field' );
+		$this->addSetting( 'google_tracking_id', __( 'Google Analytics Tracking ID', 'toms-wordpress-tools' ), 'general', 'text', 'sanitize_text_field' );
 
 		parent::construct();
 

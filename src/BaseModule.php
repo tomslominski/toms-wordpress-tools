@@ -42,7 +42,7 @@ class BaseModule
 	 * @param string $id Alphanumeric setting ID.
 	 * @param string $name User-visible setting name.
 	 * @param string $group Settings page slug.
-	 * @param string $type Setting value type.
+	 * @param string $type Setting input field type.
 	 * @param callable $sanitizer Sanitizing function.
 	 * @param string $default Default value.
 	 */
@@ -55,7 +55,8 @@ class BaseModule
 			'id' => $id,
 			'name' => $name,
 			'group' => $group,
-			'type' => $type,
+			'type' => in_array($type, ['text', 'textarea']) ? 'string' : $type,
+			'display' => $type,
 			'sanitizer' => $sanitizer,
 			'default' => $default,
 			'value' => $value,
@@ -101,12 +102,20 @@ class BaseModule
 	public function displayField(array $args)
 	{
 		$setting = $args['ts_setting'];
-		?>
 
-		<input name="<?php echo esc_attr($setting['id']); ?>" type="text" id="<?php echo esc_attr($setting['id']); ?>"
-			   value="<?php echo esc_attr($setting['value']); ?>" class="regular-text">
+		if ('textarea' === $setting['display']) :
+			?>
 
-		<?php
+			<textarea name="<?php echo esc_attr($setting['id']); ?>" id="<?php echo esc_attr($setting['id']); ?>"
+					  class="regular-text" rows="4"><?php echo wp_kses_post($setting['value']); ?></textarea>
+
+		<?php else: ?>
+
+			<input name="<?php echo esc_attr($setting['id']); ?>" type="text"
+				   id="<?php echo esc_attr($setting['id']); ?>"
+				   value="<?php echo esc_attr($setting['value']); ?>" class="regular-text">
+
+		<?php endif;
 	}
 
 	/**
