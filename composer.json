@@ -12,7 +12,8 @@
     "require": {
         "haydenpierce/class-finder": "^0.4.2",
         "php": ">=7.3",
-        "composer/installers": "~1.0"
+        "composer/installers": "~1.0",
+        "yahnis-elsts/plugin-update-checker": "^4.10"
     },
     "autoload": {
         "psr-4": {

@@ -39,4 +39,7 @@ try {
 	error_log($e->getMessage());
 }
 
+$updateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/tomslominski/toms-wordpress-tools/', __FILE__, 'toms-wordpress-tools');
+$updateChecker->getVcsApi()->enableReleaseAssets('/toms-wordpress-tools.zip/');
+
 do_action( 'TomsWordPressTools/after_init' );
