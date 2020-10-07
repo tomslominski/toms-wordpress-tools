@@ -20,6 +20,7 @@ class Module extends BaseModule
 		$this->add_plugins_to_admin_bar();
 		$this->disable_post_tags();
 		$this->enable_svg_support();
+		$this->disable_auto_updates();
 
 		parent::construct();
 	}
@@ -90,5 +91,16 @@ class Module extends BaseModule
 
 			return $mimes;
 		});
+	}
+
+	/**
+	 * Disable theme and plugin auto-update UI.
+	 */
+	public function disable_auto_updates()
+	{
+		if (apply_filters('TomsWordPressTools/disable_auto_updates', true)) {
+			add_filter('plugins_auto_update_enabled', '__return_false');
+			add_filter('themes_auto_update_enabled', '__return_false');
+		}
 	}
 }
