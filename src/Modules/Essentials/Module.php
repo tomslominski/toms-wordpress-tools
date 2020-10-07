@@ -74,9 +74,7 @@ class Module extends BaseModule
 	public function disable_post_tags()
 	{
 		if (apply_filters('TomsWordPressTools/disable_post_tags', true)) {
-			add_action('init', function () {
-				unregister_taxonomy_for_object_type('post_tag', 'post');
-			});
+			unregister_taxonomy_for_object_type('post_tag', 'post');
 		}
 	}
 

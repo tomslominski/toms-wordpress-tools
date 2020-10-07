@@ -16,11 +16,13 @@ class Module extends BaseModule
 	 */
 	public function __construct()
 	{
-		$this->addSetting( 'google_tracking_id', __( 'Google Analytics Tracking ID', 'toms-wordpress-tools' ), 'general', 'text', 'sanitize_text_field' );
+		if (apply_filters('TomsWordPressTools/enable_analytics', true)) {
+			$this->addSetting('google_tracking_id', __('Google Analytics Tracking ID', 'toms-wordpress-tools'), 'general', 'text', 'sanitize_text_field');
 
-		parent::construct();
+			parent::construct();
 
-		add_action( 'wp_head', [$this, 'head'], 0 );
+			add_action('wp_head', [$this, 'head'], 0);
+		}
 	}
 
 	/**

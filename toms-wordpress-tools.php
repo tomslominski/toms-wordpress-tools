@@ -27,19 +27,23 @@ if (file_exists($autoloader)) {
 	require_once($autoloader);
 }
 
-do_action( 'TomsWordPressTools/before_init' );
+// Initialise plugin components
+add_action( 'init', function() {
+	do_action( 'TomsWordPressTools/before_init' );
 
-try {
-	$classes = ClassFinder::getClassesInNamespace('TomsWordPressTools\Modules', ClassFinder::RECURSIVE_MODE);
+	try {
+		$classes = ClassFinder::getClassesInNamespace('TomsWordPressTools\Modules', ClassFinder::RECURSIVE_MODE);
 
-	foreach ($classes as $class) {
-		new $class;
+		foreach ($classes as $class) {
+			new $class;
+		}
+	} catch (Exception $e) {
+		error_log($e->getMessage());
 	}
-} catch (Exception $e) {
-	error_log($e->getMessage());
-}
 
+	do_action( 'TomsWordPressTools/after_init' );
+} );
+
+// Register plugin updater
 $updateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/tomslominski/toms-wordpress-tools/', __FILE__, 'toms-wordpress-tools');
 $updateChecker->getVcsApi()->enableReleaseAssets('/toms-wordpress-tools.zip/');
-
-do_action( 'TomsWordPressTools/after_init' );
