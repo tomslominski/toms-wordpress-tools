@@ -21,6 +21,7 @@ class Module extends BaseModule
 		$this->disable_post_tags();
 		$this->enable_svg_support();
 		$this->disable_auto_updates();
+		$this->disable_image_title_attr();
 		$this->disable_fullscreen_editor();
 
 		parent::construct();
@@ -102,6 +103,26 @@ class Module extends BaseModule
 		if (apply_filters('TomsWordPressTools/disable_auto_updates', true)) {
 			add_filter('plugins_auto_update_enabled', '__return_false');
 			add_filter('themes_auto_update_enabled', '__return_false');
+		}
+	}
+
+	/**
+	 * Disable the image title attribute being automatically set on image upload.
+	 */
+	public function disable_image_title_attr()
+	{
+		if (apply_filters('TomsWordPressTools/disable_image_title_attr', true)) {
+			add_filter('wp_insert_attachment_data', function (array $data, array $post_array) {
+				if (
+					empty($post_array['ID'])
+					&& isset($post_array['post_mime_type'])
+					&& wp_match_mime_types('image', $post_array['post_mime_type'])
+				) {
+					$data['post_title'] = '';
+				}
+
+				return $data;
+			}, 10, 2);
 		}
 	}
 
