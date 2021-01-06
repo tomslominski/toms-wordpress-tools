@@ -10,7 +10,7 @@
  * Plugin Name: Tom's WordPress Tools
  * Plugin URI: https://github.com/tomslominski/toms-wordpress-tools
  * Description: A bunch of WordPress helpers for my hosted WordPress sites.
- * Version: 0.1.7
+ * Version: 0.1.8
  * Requires at least: 5.2
  * Requires PHP: 7.3
  * Author: Tom Slominski

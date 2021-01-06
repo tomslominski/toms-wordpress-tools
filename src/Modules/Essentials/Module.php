@@ -21,6 +21,7 @@ class Module extends BaseModule
 		$this->disable_post_tags();
 		$this->enable_svg_support();
 		$this->disable_auto_updates();
+		$this->disable_fullscreen_editor();
 
 		parent::construct();
 	}
@@ -101,6 +102,19 @@ class Module extends BaseModule
 		if (apply_filters('TomsWordPressTools/disable_auto_updates', true)) {
 			add_filter('plugins_auto_update_enabled', '__return_false');
 			add_filter('themes_auto_update_enabled', '__return_false');
+		}
+	}
+
+	/**
+	 * Disable block editor by default.
+	 *
+	 * @link https://jeanbaptisteaudras.com/en/2020/03/disable-block-editor-default-fullscreen-mode-in-wordpress-5-4/
+	 */
+	public function disable_fullscreen_editor()
+	{
+		if (apply_filters('TomsWordPressTools/disable_fullscreen_editor', true)) {
+			$script = "window.onload = function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } }";
+			wp_add_inline_script('wp-blocks', $script);
 		}
 	}
 }
